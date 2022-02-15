@@ -4,6 +4,8 @@
 #include <locale> 
 #include "FindPalindrome.hpp"
 
+// Github: https://github.com/Killian4096/ece0302-Project2-KJR.git
+
 using namespace std;
 
 //------------------- HELPER FUNCTIONS -----------------------------------------
@@ -20,6 +22,24 @@ static void convertToLowerCase(string & value)
 	}
 }
 
+// convert vector to string
+static string vectorToString(const std::vector<std::string> inputVector){
+	string outputString;
+	for(int i=0;i<inputVector.size();i++){
+		outputString += inputVector[i];
+	}
+	return outputString;
+}
+
+static bool checkChars(const string & value){
+	for(int i=0;i<value.size();i++){
+		if( !( ((value[i]>=97) && (value[i]<=122)) || ((value[i]>=65) && (value[i]<=90)) ) ){
+			return false;
+		}
+	}
+	return true;
+}
+
 //------------------- PRIVATE CLASS METHODS ------------------------------------
 
 // private recursive function. Must use this signature!
@@ -27,12 +47,9 @@ void FindPalindrome::recursiveFindPalindromes(vector<string>
         candidateStringVector, vector<string> currentStringVector)
 {
 	if(currentStringVector.size()==0){
-		std::string candidateString;
-		for(int i=0;i<candidateStringVector.size();i++){
-			candidateString += candidateStringVector[i];
-		}
+		string candidateString = vectorToString(candidateStringVector);
 		if(isPalindrome(candidateString)){
-			palindromeVector.push_back();
+			palindromeVector.push_back(candidateStringVector);
 		}
 	}
 	else{
@@ -66,32 +83,11 @@ bool FindPalindrome::isPalindrome(string currentString) const
 	return true;
 }
 
+//Simple function to set up and call Palindromess
 void FindPalindrome::getPalindromes(){
-	vector<string> ioVector;
-	recursiveFindPalindromes(ioVector, wordVector);
-	cout << "------------------\n";
-	for(int i=0;i<ioVector.size();i++){
-		cout << "List: " << ioVector[i] << "\n";
-	}
-	bool word = false;
-	int wordStart;
 	palindromeVector.clear();
-	for(int i=0;i<ioVector.size();i++){
-		if( !(word) && !(ioVector[i].empty())){
-			word = true;
-			wordStart=i;
-			cout << "hi";
-		}
-		else if( word && ioVector[i].empty() ){
-			cout << "ho";
-			word = false;
-			vector<string> b;
-			for(int j=wordStart;j<i;j++){
-				b.push_back(ioVector[j]);
-			}
-			palindromeVector.push_back(b);
-		}
-	}
+	vector<string> candidateStringVector;
+	recursiveFindPalindromes(candidateStringVector, wordVector);
 }
 
 //------------------- PUBLIC CLASS METHODS -------------------------------------
@@ -99,15 +95,24 @@ void FindPalindrome::getPalindromes(){
 FindPalindrome::FindPalindrome()
 {
 	// TODO need to implement this...
+	// Nothing to do :( ..
 }
 
 FindPalindrome::~FindPalindrome()
 {
 	// TODO need to implement this...
+	// Hello there
+	// Nothing...
 }
 
 int FindPalindrome::number() const
 {
+	/*for(int i=0;i<palindromeVector.size();i++){
+		cout << "List:\n";
+		for(int j=0;j<palindromeVector[i].size();j++){
+			cout << "Item: " << palindromeVector[i][j] << "\n";
+		}
+	}*/
 	return palindromeVector.size();
 }
 
@@ -119,35 +124,67 @@ void FindPalindrome::clear()
 
 bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 {
-	// TODO need to implement this...
-	return false;
+	string testString = vectorToString(stringVector);
+	convertToLowerCase(testString);
+	int odds = 0;
+	int total;
+	for(char i=97;i<=122;i++){
+		total = 0;
+		for(int j=0;j<testString.size();j++){
+			j += (testString[j]==i);
+		}
+		if(total%2==1){odds++;}
+		if(odds>1){return false;}
+	}
+	return true;
 }
 
 bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
                               const vector<string> & stringVector2)
 {
-	// TODO need to implement this...
+	string testString1 = vectorToString(stringVector1);
+	convertToLowerCase(testString1);
+	string testString2 = vectorToString(stringVector2);
+	convertToLowerCase(testString2);
+	int total1;
+	int total2;
+	for(char i=97;i<122;i++){
+		total1=0;
+		for(int j=0;j<testString1.size();j++){
+			if(testString1[j]==i){total1++;}
+		}
+		total2=0;
+		for(int j=0;j<testString2.size();j++){
+			if(testString2[j]==i){total2++;}
+		}
+	}
+
 	return false;
 }
 
 bool FindPalindrome::add(const string & value)
 {
-	/*try{
+	if( !(checkChars(value)) ){
+		return false;
+	}
+	try{
 		wordVector.push_back(value);
 		getPalindromes();
 		return true;
 	}
 	catch(...){
 		return false;
-	}*/
-	wordVector.push_back(value);
-	getPalindromes();
-	return true;
+	}
 }
 
 bool FindPalindrome::add(const vector<string> & stringVector)
 {
 	try{
+		for(int i=0;i<stringVector.size();i++){
+			if( !(checkChars(stringVector[i])) ){
+				return false;
+			}
+		}
 		for(int i=0;i<stringVector.size();i++){
 			wordVector.push_back(stringVector[i]);
 		}
@@ -161,7 +198,6 @@ bool FindPalindrome::add(const vector<string> & stringVector)
 
 vector< vector<string> > FindPalindrome::toVector() const
 {
-	vector<vector<string>> returner = palindromeVector;
-	return returner;
+	return palindromeVector;
 }
 
