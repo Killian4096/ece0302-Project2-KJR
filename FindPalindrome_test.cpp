@@ -52,9 +52,9 @@ TEST_CASE("Test for shortcut 2", "[FindPalindrome]" )
 	std::vector<std::string> input1;
 	std::vector<std::string> input2;
 	input1.push_back("aaaaabbbb");
-	input2.push_back("aaaaabbbbb");
+	input2.push_back("aaaaabbbbbd");
 	REQUIRE(b.cutTest2(input1, input2));
-	input1.push_back("abc");
+	input1.push_back("abcccc");
 	REQUIRE(!(b.cutTest2(input1, input2)));
 }
 

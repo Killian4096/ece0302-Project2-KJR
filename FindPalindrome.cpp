@@ -53,6 +53,9 @@ void FindPalindrome::recursiveFindPalindromes(vector<string>
 		}
 	}
 	else{
+		if(!(cutTest2(candidateStringVector, currentStringVector))){
+			return;
+		}
 		//Put in values and what is left in that vector are the panlindronmes
 		vector<string> candidateStringBufferVector;
 		vector<string> currentStringBufferVector;
@@ -160,9 +163,17 @@ bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
 		for(int j=0;j<testString2.size();j++){
 			if(testString2[j]==i){total2++;}
 		}
-		if(total1>total2){
-			return false;
+		if(vectorToString(stringVector1).size() < vectorToString(stringVector2).size()){
+			if(total1>total2){
+				return false;
+			}
 		}
+		else{
+			if(total1<total2){
+				return false;
+			}
+		}
+			
 	}
 
 	return true;
