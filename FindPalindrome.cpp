@@ -86,6 +86,9 @@ bool FindPalindrome::isPalindrome(string currentString) const
 //Simple function to set up and call Palindromess
 void FindPalindrome::getPalindromes(){
 	palindromeVector.clear();
+	if(!cutTest1(wordVector)){
+		return;
+	}
 	vector<string> candidateStringVector;
 	recursiveFindPalindromes(candidateStringVector, wordVector);
 }
@@ -128,10 +131,10 @@ bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 	convertToLowerCase(testString);
 	int odds = 0;
 	int total;
-	for(char i=97;i<=122;i++){
+	for(char i='a';i<='z';i++){
 		total = 0;
 		for(int j=0;j<testString.size();j++){
-			j += (testString[j]==i);
+			total += (testString[j]==i);
 		}
 		if(total%2==1){odds++;}
 		if(odds>1){return false;}
@@ -157,9 +160,12 @@ bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
 		for(int j=0;j<testString2.size();j++){
 			if(testString2[j]==i){total2++;}
 		}
+		if(total1>total2){
+			return false;
+		}
 	}
 
-	return false;
+	return true;
 }
 
 bool FindPalindrome::add(const string & value)
