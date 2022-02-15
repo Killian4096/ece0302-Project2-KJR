@@ -1,0 +1,6 @@
+/home/killian/ece0302-KR/ece0302-Project2-KJR/CMakeFiles/rebuild_cache.dir
+/home/killian/ece0302-KR/ece0302-Project2-KJR/CMakeFiles/submission.dir
+/home/killian/ece0302-KR/ece0302-Project2-KJR/CMakeFiles/edit_cache.dir
+/home/killian/ece0302-KR/ece0302-Project2-KJR/CMakeFiles/test.dir
+/home/killian/ece0302-KR/ece0302-Project2-KJR/CMakeFiles/FindPalindrome-main.dir
+/home/killian/ece0302-KR/ece0302-Project2-KJR/CMakeFiles/FindPalindrome-tests.dir
