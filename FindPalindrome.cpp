@@ -40,6 +40,15 @@ static bool checkChars(const string & value){
 	return true;
 }
 
+static string sentenceToString(const string & value){
+	string output;
+	for(int i=0;i<value.length();i++){
+		if( (value[i]=='?') || (value[i]=='.') || (value[i]==' ') ){}
+		else{output += value[i];}
+	}
+	return output;
+}
+
 //------------------- PRIVATE CLASS METHODS ------------------------------------
 
 // private recursive function. Must use this signature!
@@ -181,11 +190,12 @@ bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
 
 bool FindPalindrome::add(const string & value)
 {
-	if( !(checkChars(value)) ){
+	string word = sentenceToString(value);
+	if( !(checkChars(word)) ){
 		return false;
 	}
 	try{
-		wordVector.push_back(value);
+		wordVector.push_back(word);
 		getPalindromes();
 		return true;
 	}
@@ -198,12 +208,12 @@ bool FindPalindrome::add(const vector<string> & stringVector)
 {
 	try{
 		for(int i=0;i<stringVector.size();i++){
-			if( !(checkChars(stringVector[i])) ){
+			if( !(checkChars(sentenceToString(stringVector[i]))) ){
 				return false;
 			}
 		}
 		for(int i=0;i<stringVector.size();i++){
-			wordVector.push_back(stringVector[i]);
+			wordVector.push_back(sentenceToString(stringVector[i]));
 		}
 		getPalindromes();
 		return true;
